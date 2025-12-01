@@ -17,12 +17,14 @@
 
 try {
     $db = new PDO("mysql:host=localhost;dbname=alcohol","root","");
-    $query=$db->prepare("SELECT * FROM vodka WHERE id = " . $_GET['id']);
+    $query=$db->prepare("SELECT * FROM vodka WHERE id = :id");
+    $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+    $query->bindParam("id", $id);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($result as $data){
-        echo "<table class='table table-success table-striped'>";
+        echo "<table class='table table-striped'>";
           echo "<thead>";
             echo "<tr>";
                 echo "<th scope='col'>Name</th>";
@@ -33,7 +35,7 @@ try {
         foreach($result as $data){
             echo "<tr>";
                 echo "<td>" . $data['naam'] . "</td>";
-                echo "<td>" . $data['alcohol%'] . "</td>";
+                echo "<td>" . $data['percent'] . "</td>";
                 echo "<td>" . $data['beschrijving'] . "</td>";
             echo "</tr>";
         }
@@ -45,3 +47,4 @@ try {
 ?>
 
 <a href="index.php">home</a>
+<a href="new.php">Add new</a>
