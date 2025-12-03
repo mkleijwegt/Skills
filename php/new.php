@@ -18,7 +18,7 @@ try {
     $db = new PDO("mysql:host=localhost;dbname=alcohol", "root", "");
     if (isset($_POST['verzenden'])){
         $naam = filter_input(INPUT_POST, "naam", FILTER_SANITIZE_STRING);
-        $percent = filter_input(INPUT_POST, "percent", FILTER_SANITIZE_DECIMAL);
+        $percent = filter_input(INPUT_POST, "percent", FILTER_SANITIZE_NUMBER_FLOAT);
         $beschrijving = filter_input(INPUT_POST, "beschrijving", FILTER_SANITIZE_STRING);
 
         $query = $db->prepare("INSERT INTO vodka (naam,percent,beschrijving) VALUES (:naam, :percent, :beschrijving)");
@@ -36,3 +36,19 @@ try {
 } catch (PDOException $e){
     die ("Error:" . $e->getMessage());
 }
+?>
+
+<form method="post" action="">
+    <label>Naam</label>
+    <input type="text" name="naam"><br>
+
+    <label>Alcohol percentage</label>
+    <input type="number" name="percent"><br>
+
+    <label>Beschrijving</label>
+    <input type="text" name="beschrijving"><br>
+
+    <input type="submit" name="verzenden" value="opslaan">
+</form>
+
+<a href="index.php">Go back</a>
