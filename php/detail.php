@@ -47,4 +47,3 @@ try {
 ?>
 
 <a href="index.php">home</a>
-<a href="new.php">Add new</a>

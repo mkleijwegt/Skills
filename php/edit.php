@@ -24,7 +24,7 @@ try {
 
     if (isset($_POST['verzenden'])){
         $naam = filter_input(INPUT_POST, "naam", FILTER_SANITIZE_STRING);
-        $percent = filter_input(INPUT_POST, "percent", FILTER_SANITIZE_NUMBER_FLOAT);
+        $percent = filter_input(INPUT_POST, "percent", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $beschrijving = filter_input(INPUT_POST, "beschrijving", FILTER_SANITIZE_STRING);
 
         $query = $db->prepare("UPDATE vodka SET naam = :naam, percent = :percent, beschrijving = :beschrijving WHERE id = :id");
@@ -34,7 +34,10 @@ try {
         $query->bindParam("beschrijving", $beschrijving);
         $query->bindParam("id", $_GET['id']);
         if($query->execute()){
-            echo "gegevens zijn aangepast";
+            echo "gegevens zijn aangepast" . "<br>";
+            ?>
+            <a href="../php/index.php">Go to home</a>
+            <?php
         } else {
             echo "er is een error opgetreden";
         }
